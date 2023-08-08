@@ -51,6 +51,16 @@ class TestHeapMethods(unittest.TestCase):
         min_heap.delete(2)
         self.assertEqual(min_heap.get_heap, [12, 15, 80, 40, 75, 200])
 
+    def test_build_min_heap(self):
+        min_heap = Heap([32, 5, 65, 23, 45, 678, 12], HeapType.MIN_HEAP)
+        min_heap.build_heap()
+        self.assertEqual(min_heap.get_heap, [5, 23, 12, 32, 45, 678, 65])
+
+    def test_build_max_heap(self):
+        min_heap = Heap([70, 43, 5, 9, 17, 23, 34, 678, 98, 7, 32], HeapType.MAX_HEAP)
+        min_heap.build_heap()
+        self.assertEqual(min_heap.get_heap, [678, 98, 34, 70, 32, 23, 5, 9, 43, 7, 17])
+
 
 if __name__ == "__main__":
     unittest.main()
