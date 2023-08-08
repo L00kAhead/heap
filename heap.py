@@ -12,7 +12,7 @@ class Heap:
         self.__heap_type = heap_type
 
     @property
-    def get_arr(self):
+    def get_heap(self):
         return self.__arr
 
     def insert(self, value: int | float, idx=None) -> list[int | float]:
@@ -151,3 +151,15 @@ class Heap:
             self.extract()
         else:
             raise IndexError("Index out of range")
+
+    def build_heap(self):
+        """
+        Build the heap from the given array by applying heapify operations.
+
+        Note:
+            This method rearranges the elements in the heap to satisfy the heap property,
+            starting from the bottom-most right-most node and working upwards.
+        """
+        start_idx = abs((len(self.__arr) - 2) // 2)
+        for idx in range(start_idx, -1, -1):
+            self.heapify(idx)
