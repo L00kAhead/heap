@@ -37,7 +37,7 @@ class Heap:
         for _ in range(len(self.__arr)):
             parent_idx = abs((curr_idx - 1) // 2)
 
-            if self.__heap_type == HeapType.MIN_HEAP :
+            if self.__heap_type == HeapType.MIN_HEAP:
                 if self.__arr[parent_idx] < self.__arr[curr_idx]:
                     break
                 elif curr_idx == 0:
@@ -72,7 +72,7 @@ class Heap:
         right_child = 2 * idx + 2
         curr_idx = idx
 
-        if self.__heap_type == "min_heap":
+        if self.__heap_type == HeapType.MIN_HEAP:
             # Min Heap
             if (
                 left_child < len(self.__arr)
