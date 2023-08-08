@@ -6,6 +6,44 @@ class HeapType(Enum):
     MAX_HEAP = "max_heap"
 
 
+class HeapSort:
+    @staticmethod
+    def heapify(arr, n, i, heap_type):
+        parent = i
+        left_child = 2 * i + 1
+        right_child = 2 * i + 2
+
+        if heap_type == HeapType.MIN_HEAP:
+            if left_child < n and arr[left_child] < arr[parent]:
+                parent = left_child
+
+            if right_child < n and arr[right_child] < arr[parent]:
+                parent = right_child
+        else:
+            if left_child < n and arr[left_child] > arr[parent]:
+                parent = left_child
+
+            if right_child < n and arr[right_child] > arr[parent]:
+                parent = right_child
+
+        if parent != i:
+            arr[i], arr[parent] = arr[parent], arr[i]
+            HeapSort.heapify(arr, n, parent, heap_type)
+
+    @staticmethod
+    def heap_sort(arr, heap_type=HeapType.MIN_HEAP):
+        n = len(arr)
+
+        # Build a max or min heap based on heap_type
+        for i in range(n // 2 - 1, -1, -1):
+            HeapSort.heapify(arr, n, i, heap_type)
+
+        # Extract elements from the heap one by one
+        for i in range(n - 1, 0, -1):
+            arr[i], arr[0] = arr[0], arr[i]  # Swap
+            HeapSort.heapify(arr, i, 0, heap_type)  # Heapify the reduced heap
+
+
 class Heap:
     def __init__(self, arr: list[int | float], heap_type: HeapType) -> None:
         self.__arr = arr
@@ -61,7 +99,7 @@ class Heap:
                     curr_idx = parent_idx
         return self.__arr
 
-    def heapify(self, idx: int) -> None:
+    def heapify(self, idx: int, arr=None, size=None) -> None:
         """
         Rearrange the heap rooted at the given index to maintain the heap property.
 
@@ -71,34 +109,28 @@ class Heap:
         left_child = 2 * idx + 1
         right_child = 2 * idx + 2
         curr_idx = idx
+        if arr:
+            self.__arr = arr
+        if size == None:
+            size = len(self.__arr)
+        else:
+            size = size
 
         if self.__heap_type == HeapType.MIN_HEAP:
             # Min Heap
-            if (
-                left_child < len(self.__arr)
-                and self.__arr[left_child] < self.__arr[curr_idx]
-            ):
+            if left_child < size and self.__arr[left_child] < self.__arr[curr_idx]:
                 curr_idx = left_child
 
             # Compare with right child
-            if (
-                right_child < len(self.__arr)
-                and self.__arr[right_child] < self.__arr[curr_idx]
-            ):
+            if right_child < size and self.__arr[right_child] < self.__arr[curr_idx]:
                 curr_idx = right_child
         else:
             # Max Heap
-            if (
-                left_child < len(self.__arr)
-                and self.__arr[left_child] > self.__arr[curr_idx]
-            ):
+            if left_child < size and self.__arr[left_child] > self.__arr[curr_idx]:
                 curr_idx = left_child
 
             # Compare with right child
-            if (
-                right_child < len(self.__arr)
-                and self.__arr[right_child] > self.__arr[curr_idx]
-            ):
+            if right_child < size and self.__arr[right_child] > self.__arr[curr_idx]:
                 curr_idx = right_child
 
         # Swap if needed and continue heapifying
@@ -163,3 +195,7 @@ class Heap:
         start_idx = abs((len(self.__arr) - 2) // 2)
         for idx in range(start_idx, -1, -1):
             self.heapify(idx)
+
+    def heap_sort(self):
+        HeapSort.heap_sort(self.__arr, self.__heap_type)
+

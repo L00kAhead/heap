@@ -61,6 +61,16 @@ class TestHeapMethods(unittest.TestCase):
         min_heap.build_heap()
         self.assertEqual(min_heap.get_heap, [678, 98, 34, 70, 32, 23, 5, 9, 43, 7, 17])
 
+    def test_heap_sort_ascending(self):
+        heap = Heap([4, 10, 3, 5, 1, 8, 2], HeapType.MAX_HEAP)
+        heap.heap_sort()
+        self.assertEqual(heap.get_heap, [1, 2, 3, 4, 5, 8, 10])
+
+    def test_heap_sort_descending(self):
+        heap = Heap([4, 10, 3, 5, 1, 8, 2], HeapType.MIN_HEAP)
+        heap.heap_sort()
+        self.assertEqual(heap.get_heap, [10, 8, 5, 4, 3, 2, 1])
+
 
 if __name__ == "__main__":
     unittest.main()
