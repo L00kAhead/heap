@@ -126,3 +126,28 @@ class Heap:
         extracted_val = self.__arr.pop()
         self.heapify(0)
         return extracted_val
+
+    def delete(self, idx: int) -> None:
+        """
+        Delete the element at the specified index from the heap.
+
+        Args:
+            idx (int): The index of the element to be deleted.
+
+        Raises:
+            IndexError: If the index is out of range.
+
+        Note:
+            For a min-heap, the element at the specified index is replaced with negative infinity
+            before performing an extract operation to maintain the heap property.
+            For a max-heap, the element at the specified index is replaced with positive infinity
+            before performing an extract operation to maintain the heap property.
+        """
+        if 0 <= idx < len(self.__arr):
+            if self.__heap_type == HeapType.MIN_HEAP:
+                self.insert(float("-inf"), idx)
+            else:
+                self.insert(float("inf"), idx)
+            self.extract()
+        else:
+            raise IndexError("Index out of range")
