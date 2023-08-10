@@ -99,7 +99,7 @@ class Heap:
                     curr_idx = parent_idx
         return self.__arr
 
-    def heapify(self, idx: int, arr=None, size=None) -> None:
+    def heapify(self, idx: int) -> None:
         """
         Rearrange the heap rooted at the given index to maintain the heap property.
 
@@ -109,28 +109,22 @@ class Heap:
         left_child = 2 * idx + 1
         right_child = 2 * idx + 2
         curr_idx = idx
-        if arr:
-            self.__arr = arr
-        if size == None:
-            size = len(self.__arr)
-        else:
-            size = size
 
         if self.__heap_type == HeapType.MIN_HEAP:
             # Min Heap
-            if left_child < size and self.__arr[left_child] < self.__arr[curr_idx]:
+            if left_child < len(self.__arr) and self.__arr[left_child] < self.__arr[curr_idx]:
                 curr_idx = left_child
 
             # Compare with right child
-            if right_child < size and self.__arr[right_child] < self.__arr[curr_idx]:
+            if right_child < len(self.__arr) and self.__arr[right_child] < self.__arr[curr_idx]:
                 curr_idx = right_child
         else:
             # Max Heap
-            if left_child < size and self.__arr[left_child] > self.__arr[curr_idx]:
+            if left_child < len(self.__arr) and self.__arr[left_child] > self.__arr[curr_idx]:
                 curr_idx = left_child
 
             # Compare with right child
-            if right_child < size and self.__arr[right_child] > self.__arr[curr_idx]:
+            if right_child < len(self.__arr) and self.__arr[right_child] > self.__arr[curr_idx]:
                 curr_idx = right_child
 
         # Swap if needed and continue heapifying
